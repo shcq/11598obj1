@@ -1,0 +1,55 @@
+.layui-breadcrumb a{
+    color: #CC0000 !important;
+}
+.warn{
+    color:#CC1111 !important;
+}
+.layui-table th {
+    text-align:center;
+}
+#mydiv{
+    width: 240px;
+    text-align: center;
+}
+.sledstu{
+    width: 200px;
+    height: 60px;
+    font-family:隶书;
+    font-size: 25px;
+    line-height: 60px;
+    text-align: center;
+    border: 2px solid springgreen;
+    margin: 20px;
+    color: red;
+}
+.header img{
+    width:60px;
+    height:60px;
+    border-radius:50% ;
+    cursor: pointer;
+}
+.preheader{
+    display: none;
+}
+.layui-form-select dl{
+    z-index: 99999;
+}
+h1{
+    text-align: center;
+    margin: 20px 0;
+}
+.loginform{
+    width: 500px;
+    margin: 0 auto;
+}
+.layui-container{
+    background-image: url("../img/1.jpg");
+    margin-top: 150px;
+    height: 300px;
+    overflow: hidden;
+}
+.mylabel{
+    padding: 9px 0;
+    width: auto;
+    font-size: 16px;
+}
