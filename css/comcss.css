@@ -47,9 +47,17 @@ h1{
     margin-top: 150px;
     height: 300px;
     overflow: hidden;
+    height: 320px;
+    overflow: hidden;
+    opacity: 0.8;
 }
 .mylabel{
     padding: 9px 0;
     width: auto;
     font-size: 16px;
+}
+#c{
+    height: 700px;
+    top: 0;
+    width: 100%;
 }

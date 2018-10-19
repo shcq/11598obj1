@@ -1,21 +1,15 @@
 window.onload=function(){
-        let login=document.querySelector('.login');
-        if (!login) return;
-        let register=document.querySelector('.register');
-        if (!register) return;
-        let adminlog=document.querySelector('.adminlog');
-        if (!adminlog) return;
+    let adminlog=document.querySelector('.adminlog');
+    if (!adminlog) return;
+    let returns=document.querySelector('.returns');
+    if (!returns) return;
 
-        register.onclick=function () {
-            //console.log(123);
-            window.location.href='./register.php';
-        }
-        adminlog.onclick=function () {
-            window.location.href='./adminlog.html';
-        }
-    login.onclick=function () {
+    returns.onclick=function () {
+        window.location.href='./login.html';
+    }
+    adminlog.onclick=function () {
         let xhr=new XMLHttpRequest();
-        xhr.open('POST','./logininto.php');
+        xhr.open('POST','./admloginto.php');
         let formdata=new FormData();
         formdata.append('username',document.querySelector('input[name="username"]').value);
         formdata.append('passwd',document.querySelector('input[name="passwd"]').value);

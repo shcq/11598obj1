@@ -41,7 +41,7 @@ window.onload=function(){
                 }
                 if(res.r=='register success'){
                   alert("注册成功");
-                    window.location.href='./login.php';
+                    window.location.href='./login.html';
                 }
 
             }
