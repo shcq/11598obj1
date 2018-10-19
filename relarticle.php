@@ -3,9 +3,14 @@ require 'atop.php'
 ?>
 
 
-
-
 <div class="layui-body">
+    <div style="padding: 15px;">
+        <span class="layui-breadcrumb">
+          <a href="">个人后台</a>
+          <a href="">文章管理</a>
+          <a><cite>发布文章</cite></a>
+        </span>
+        <hr>
     <form class="layui-form" action="">
         <div class="layui-form-item">
             <label class="layui-form-label">文章标题</label>
@@ -23,11 +28,12 @@ require 'atop.php'
 
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn addstu" type="button">发布</button>
+                <button class="layui-btn addart" type="button">发布</button>
             </div>
         </div>
     </form>
 
+</div>
 </div>
 
 <!--<script src="http://unpkg.com/wangeditor/release/wangEditor.min.js"></script>-->

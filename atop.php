@@ -1,3 +1,6 @@
+
+<?php require './common/mysql.php'?>
+
 <!DOCTYPE html>
 <html>
 <head>

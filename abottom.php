@@ -3,7 +3,8 @@
     © huaqing - 悠长博客
 </div>
 </div>
-<script src="./layui/layui.js"></script>
+<script src="./layui/layui.all.js"></script>
+<script src="./js/admin.js"></script>
 <script>
     //JavaScript代码区域
     layui.use('element', function(){
