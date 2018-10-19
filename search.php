@@ -22,6 +22,7 @@ $sql='SELECT * FROM users'.$where;
 $r=$mydb->query($sql);
 //    var_dump($r);
 //    exit;
+
 $us=$r->fetch_all(MYSQLI_ASSOC);
 ?>
 <form action="./search.php" class="layui-form" method="get">

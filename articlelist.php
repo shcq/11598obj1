@@ -10,9 +10,9 @@ $arlist = $r->fetch_all(MYSQLI_ASSOC);
 <div class="layui-body">
     <div style="padding: 15px;">
         <span class="layui-breadcrumb">
-          <a href="">个人后台</a>
-          <a href="">文章管理</a>
-          <a><cite>文章列表</cite></a>
+          <a href="">涓汉鍚庡彴</a>
+          <a href="">鏂囩珷绠＄悊</a>
+          <a><cite>鏂囩珷鍒楄〃</cite></a>
         </span>
         <hr>
         <table class="layui-table  classlist">
@@ -24,11 +24,11 @@ $arlist = $r->fetch_all(MYSQLI_ASSOC);
             <thead>
             <tr>
                 <th>ID</th>
-                <th>文章标题</th>
-                <th>发布时间</th>
-                <th>修改时间</th>
-                <th>浏览次数</th>
-                <th>操作</th>
+                <th>鏂囩珷鏍囬</th>
+                <th>鍙戝竷鏃堕棿</th>
+                <th>淇敼鏃堕棿</th>
+                <th>娴忚娆℃暟</th>
+                <th>鎿嶄綔</th>
             </tr>
             </thead>
             <tbody>
@@ -40,8 +40,8 @@ $arlist = $r->fetch_all(MYSQLI_ASSOC);
               <th>'.$atu['addtime'].'</th>
               <th>'.$atu['updatetime'].'</th>
               <th>'.$atu['arnums'].'</th>
-              <th><A href="#" class="delart" data-arid="'.$atu['arid'].'">删除</A> |
-              <a href="./updateart.php?arid=' . $atu['arid'] . '">修改</a>
+              <th><A href="#" class="delart" data-arid="'.$atu['arid'].'">鍒犻櫎</A> |
+              <a href="./updateart.php?arid=' . $atu['arid'] . '">淇敼</a>
               </th>
               </tr>';
             }
