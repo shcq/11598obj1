@@ -1,7 +1,7 @@
 window.onload=function(){
     register();
     uploading();
-    updateuser();
+    updateame();
 }
 function register() {
     let register1=document.querySelector('.register1');
@@ -82,47 +82,36 @@ function uploading() {
         }
     }
 }
-function updateuser() {
+function updateame() {
     let update=document.querySelector('.update');
     if (!update) return;
     update.onclick=function () {
 
-        let username=document.querySelector('input[name="username"]');
+        let aname=document.querySelector('input[name="aname"]');
         let regsn=/^[\u4e00-\u9fa5]{2,4}$/;
-        if(!regsn.test(username.value)){
-            username.parentNode.nextElementSibling.classList.add('warn');
-            username.focus();
+        if(!regsn.test(aname.value)){
+            aname.parentNode.nextElementSibling.classList.add('warn');
+            aname.focus();
             return false;
         }else {
-            username.parentNode.nextElementSibling.classList.remove('warn');
+            aname.parentNode.nextElementSibling.classList.remove('warn');
         }
-
-        let passwd=document.querySelector('input[name="passwd"]');
-        let regsu=/^\d{6}$/;
-        if(!regsu.test(passwd.value)){
-            passwd.parentNode.nextElementSibling.classList.add('warn');
-            passwd.focus();
-            return false;
-        }else {
-            passwd.parentNode.nextElementSibling.classList.remove('warn');
-        }
-
         let xhr=new XMLHttpRequest();
-        xhr.open('POST','./updateto.php');
+        xhr.open('POST','./updatamesto.php');
         let formdata=new FormData();
-        formdata.append('username',document.querySelector('input[name="username"]').value);
-        formdata.append('passwd',document.querySelector('input[name="passwd"]').value);
+        formdata.append('aname',document.querySelector('input[name="aname"]').value);
+        formdata.append('aid',document.querySelector('input[name="aid"]').value);
+        formdata.append('info',document.querySelector('textarea[name="info"]').value);
         formdata.append('head',document.querySelector('input[name="head"]').value);
         xhr.send(formdata);
         xhr.onreadystatechange=function(){
             if(xhr.readyState==4 && xhr.status==200){
                 let res=JSON.parse(xhr.responseText);
-                console.log(data);
                 if (res.r == 'ok') {
                     layer.confirm('修改成功', {
-                        btn: [ '回到管理页面']
+                        btn: [ '回到首页']
                     }, function (index) {
-                        window.location.href = './login.html';
+                        window.location.href = './admin.php';
                     });
                 } else {
                     alert('失败，请刷新后重新操作');

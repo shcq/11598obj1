@@ -3,7 +3,7 @@ require('./common/mysql.php');
 $username=$_POST['username'];
 $passwd=$_POST['passwd'];
 
-$sql='SELECT aid,aname,passwd FROM admin 
+$sql='SELECT aid,aname,passwd,head FROM admin 
 WHERE aname="'.$username.'" LIMIT 1';
 $r=$mydb->query($sql);
 //var_dump($r);
@@ -22,5 +22,7 @@ if(md5($passwd)!=$admin['passwd']){
 $sql='UPDATE admin SET lasttimes="'.date('Y-m-d H:i:s',time()).'"
     WHERE aid='.$admin['aid'].' LIMIT 1';
 $mydb->query($sql);
-
+$_SESSION['aid']=$admin['aid'];
+$_SESSION['username']=$admin['aname'];
+$_SESSION['head']=$admin['head'];
 echo json_encode(['r'=>'ok']);

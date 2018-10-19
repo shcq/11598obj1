@@ -25,7 +25,7 @@ require 'atop.php';
                 <div class="layui-form-item">
                     <label class="layui-form-label">用户名</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="username" required lay-verify="required" value="111" readonly
+                        <input type="text" name="username" required lay-verify="required" value="<?=$_SESSION['username']?>" readonly
                                autocomplete="off" class="layui-input">
                     </div>
                     <div class="layui-form-mid layui-word-aux">用户名不可改</div>

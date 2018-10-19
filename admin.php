@@ -1,3 +1,25 @@
+<?=
+require('./common/mysql.php');
+$aid=(int)$_SESSION['aid'];
+$sql='SELECT * FROM admin WHERE status=1 AND aid='.$aid;
+$r=$mydb->query($sql);
+$adm=$r->fetch_array(MYSQLI_ASSOC);
+foreach ($adm as $key=>$value){
+    $$key=$value;
+}
+
+$where=' WHERE status=1';
+$urlext='';
+$title='';
+if(isset($_GET['title'])&&trim($_GET['title'])){
+    $title=trim($_GET['title']);
+    $where.=' AND title LIKE "%'.$title.'%"';
+    $urlext.='&title='.urlencode($title);
+}
+$sql='SELECT * FROM arlist'.$where;
+$r1=$mydb->query($sql);
+$articles=$r1->fetch_all(MYSQLI_ASSOC);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +28,7 @@
     <link rel="stylesheet" href="./js/bootstrap-4.1.2-dist/css/bootstrap.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/my.css">
+    <link rel="stylesheet" href="css/comcss.css">
     <link rel="icon" href="./images/icon.png">
 </head>
 <body>
@@ -34,18 +57,25 @@
             </div>
             <div class="col-4">
                 <div class="row">
-                    <div class="col-4 text-center" style="line-height: 130px">
-                        <img src="images/user.png" height="50" width="50"/>
+                    <div class="col-4 text-center header" style="line-height: 130px;margin-top: 10px">
+                        <img src="<?=$_SESSION['head'] ? $_SESSION['head'] : 'images/user.png' ?>" height="50" width="50"/>
+                        <button type="button" class="btn btn-outline-warning" style="
+                                padding: 0 2px;margin-top: 10px"><span style="font-size: 15px">
+                                        <a href="./updatames.php">个人后台</a></span></button>
                     </div>
                     <div class="col-8">
                         <div class="row">
+
                             <div class="col-8">
                                 <!--欢迎来到悠长博客-->
-                                <div style="text-align: center;margin-top: 45px">
-                                    <span>欢迎来到悠长博客!</span><br>
+
+                                <div style="text-align: center;margin-top: 25px">
+
+                                    <span><?= $aname ?></br>欢迎来到悠长博客!</span><br>
 <!--                                    <span><a href="">登录</a></span> |-->
-                                    <span><a href="">退出登录</a></span>
+                                    <span><a href="./logout.php">退出登录</a></span>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -60,24 +90,25 @@
             <div class="col-3"  style="padding-left: 0 ">
                 <!--博主信息简介-->
                 <div style="height: 270px;border: 1px solid #c5b164;padding-top: 20px" class="model_bg">
-                    <div style="text-align: center"><img src="images/user.png" style="height: 65px;width: 65px"/></div>
-                    <p style="text-align: center;padding-top: 10px">昵称</p>
+                    <div style="text-align: center;" class="header"><img src="<?=$head?>" style="height: 65px;width: 65px"/></div>
+                    <p style="text-align: center;padding-top: 10px"><?=$_SESSION['username']?></p>
                     <div style="margin-left: 25px">简介:</div>
-                    <div style="width: 200px;height: 70px;margin: 0 auto;border: 1px solid #c5b164">fff</div>
-                    <button type="button" class="btn btn-outline-warning" style="
-                            padding: 0 2px;margin-left:165px;"><span style="font-size: 15px">个人后台</span></button>
+                    <div style="width: 200px;height: 70px;margin: 0 auto;border: 1px solid #c5b164"><?=$info?></div>
 <!--                    <button type="button" class="btn btn-primary btn-sm">Small button</button>-->
                 </div>
 
                 <!--搜索栏目-->
-                <div style="height: 50px;border: 1px solid #c5b164;margin-top: 10px">
+                <div style="height: 43px;border: 1px solid #c5b164;margin-top: 10px">
                     <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1"><img src="images/搜索.png" height="30"
-                                                                                  width="30"/></span>
-                        </div>
-                        <input type="text" class="form-control" placeholder="请输入搜索关键字" aria-label="Username"
-                               aria-describedby="basic-addon1">
+                        <form action="./admin.php"  method="get">
+                            <a href="./admin.php?<?=$urlext?>"></a>
+                            <button style="background-color: #c2c2c2;width: 40px;height: 40px">
+                                <img src="images/搜索.png" height="30" width="30"/>
+                            </button>
+                            <input type="text" style="height: 38px;font-family: 新宋体"
+                                   name="title" class="layui-input" placeholder="请输入搜索关键字"
+                            value="<?= $title ?>">
+                        </form>
                     </div>
 
                 </div>
@@ -102,24 +133,17 @@
             <!--右边文章主体-->
             <div class="col-9" class="model_bg">
                 <div style="width: 100%;height: 100px;text-align: center;line-height: 100px"><span class="font">发表的文章</span></div>
-                <div style="width: 100%;height: 3px;background: #c5b164"></div>
-            </div>
-        </div>
-    </div>
-
-    <!--    底部-->
-    <div class="container" style="margin-top: 50px">
-        <div class="row">
-            <div class="col-12" style="width: 100%;height: 5px;background: #c5b164"></div>
-        </div>
-        <div class="row"style="margin-top: 20px;height: 70px">
-            <div class="col-1 offset-3" style="border-right:2px solid #c1a331 ;line-height: 70px">
-                <img src="./images/icon.png" style="width: ;height: ">
-            </div>
-            <div class="col-7">
-                地址：上海市 &nbsp; 电话：10000000000&nbsp;  邮政编码：100000<br>
-                Copyright©2008-2018 All rights reserved<br>
-                悠长博客&nbsp; 版权所有
+                <div style="width: 100%;height: 3px;background: #c5b164">
+                    <?php
+                    foreach ($articles as $k=>$v)
+                    {
+                        echo '<div>
+                               <div>'.str_replace($title,'<span class="warn">'.$title.'</span>',$v['title']).'</div>
+                               <div>'.$v['content'].'</div>
+                            </div>';
+                    }
+                    ?>
+                </div>
             </div>
         </div>
     </div>

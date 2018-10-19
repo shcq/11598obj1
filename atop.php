@@ -9,12 +9,13 @@
     <title>个人后台</title>
     <link rel="stylesheet" href="./layui/css/layui.css">
     <link rel="icon" href="./images/icon.png">
+    <link rel="stylesheet" href="css/comcss.css">
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
         <a href="pcenter.php"><div class="layui-logo">个人后台</div></a>
-
+        <a href="admin.php"><div class="layui-logo" style="left: 90px">回到首页</div></a>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <img src="http://t.cn/RCzsdCq" class="layui-nav-img">

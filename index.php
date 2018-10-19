@@ -78,8 +78,8 @@
                                 <!--欢迎来到悠长博客-->
                                 <div style="text-align: center;margin-top: 45px">
                                     <span>欢迎来到悠长博客!</span><br>
-                                    <span><a href="">登录</a></span> |
-                                    <span><a href="">注册</a></span>
+                                    <span><a href="./login.html">登录</a></span> |
+                                    <span><a href="./login.html">注册</a></span>
                                 </div>
                             </div>
                         </div>
@@ -96,7 +96,7 @@
                 <!--博主信息简介-->
                 <div style="height: 250px;border: 1px solid #c5b164;padding-top: 20px" class="model_bg">
                     <div style="text-align: center"><img src="images/user.png" style="height: 65px;width: 65px"/></div>
-                    <p style="text-align: center;padding-top: 10px">昵称</p>
+                    <p style="text-align: center;padding-top: 10px"><?=$_SESSION['username']?></p>
                     <div style="margin-left: 25px">简介:</div>
                     <div style="width: 200px;height: 70px;margin: 0 auto;border: 1px solid #c5b164">fff</div>
                 </div>

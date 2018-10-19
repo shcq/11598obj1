@@ -22,14 +22,17 @@ $sql='SELECT * FROM users'.$where;
 $r=$mydb->query($sql);
 //    var_dump($r);
 //    exit;
-
 $us=$r->fetch_all(MYSQLI_ASSOC);
 ?>
 <form action="./search.php" class="layui-form" method="get">
     <a href="./search.php?<?=$urlext?>"></a>
     <div class="layui-form-item">
-        <div class="layui-inline">
-            <label class="layui-form-label mylabel"> 姓名: </label>
+        <div class="layui-inline" >
+            <div class="layui-input-inline" style="width: 100px;>
+                <button class="layui-btn"><i class="layui-icon layui-icon-search" style="font-size: 16px; color: #666;"></i>  查询</label></button>
+                <!--                <div class="layui-form-mid layui-word-aux utip">关键字查询</div>-->
+            </div>
+<!--            <label class="layui-form-label mylabel"> 姓名: </label>-->
             <div class="layui-input-inline" style="width: 100px;">
                 <input type="text" name="uname" class="layui-input" value="<?=$uname?>">
             </div>
