@@ -6,6 +6,14 @@
 /*body{*/
     /*background: #efe9e3;*/
 /*}*/
+a{
+	text-decoration: none;
+	color: black;
+}
+a:hover{
+	text-decoration: none;
+	color: #53530bcc;
+}
 
 #bg{
     width: 100%;
@@ -36,12 +44,17 @@
 }
 
 .nav_h a{
-    color: #c1a331;
+    color: #359264;
 }
 
 .nav_h a:hover{
     color: orange;
     text-decoration: none;
+}
+.model_bg{
+	height: 360px;
+	border: 1px solid #c5b164;
+	margin-top: 10px;
 }
 
 .font{
@@ -58,4 +71,82 @@
 
 .col-3{
 
+}
+.articlebox{
+	
+	text-align: center;
+	margin: 20px 0;
+	overflow: hidden;
+	
+}
+.article{
+	width: 99%;
+	margin-bottom: 30px;
+	background: #ebebeb8f;
+	padding: 20px 0;
+	opacity: 0.95;
+	box-shadow:  5px 5px 10px #cababa;
+	border-radius: 20px;
+}
+.article a{
+	color: #901919;
+}
+.article a:hover{
+	color: #53530bcc;
+}
+
+.content {
+	color: black;
+	margin: 0 auto;
+	width: 90%;
+	line-height: 25px;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+	word-break: break-all;
+	text-indent:25px;
+}
+.content1{
+	height: 830px;
+	text-align: left;
+	margin: 0 auto;
+	width: 90%;
+	line-height: 40px;
+	word-break: break-all;
+	overflow: scroll;
+	text-indent:25px;
+	
+}
+.content1::-webkit-scrollbar{
+	/*滚动条整体部分，其中的属性有width,height,background,border等（就和一个块级元素一样）（位置1）*/
+			display: none;
+}
+ul{
+	margin-left: 30px;
+}
+.hot li{
+	height: 30px;
+	line-height: 20px;
+	margin: 15px 0;
+	list-style-type:none;
+	list-style-image: url(../images/hot.png);
+}
+.user li{
+	height: 30px;
+	line-height: 20px;
+	margin: 15px 0;
+	list-style-type:none;
+	list-style-image: url(../images/user1.png);
+}
+.hot span{
+	font-size: 10px;
+	color: deepskyblue;
+}
+.user span{
+	font-size: 10px;
+	color: orangered;
+}
+ul a{
+	font-size: 15px;
 }
