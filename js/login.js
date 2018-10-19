@@ -4,7 +4,7 @@ window.onload=function(){
         let register=document.querySelector('.register');
         if (!register) return;
         register.onclick=function () {
-            window.location.href='./register.html';
+            window.location.href='./register.php';
         }
     login.onclick=function () {
         let xhr=new XMLHttpRequest();
