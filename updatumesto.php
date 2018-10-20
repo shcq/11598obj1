@@ -4,9 +4,7 @@ foreach ($_POST as $key => $value) {
     $$key = $value;
 }
 
-$sql = 'UPDATE admin SET aname = "' . $aname . '", head = "' . $head . '",info = "' . addslashes($info) . '" WHERE status=1';
-// echo $sql;
-// exit;
+$sql = 'UPDATE users SET uname = "' . $uname . '", head = "' . $head . '" WHERE uid = ' . (int)$uid;
 $r = $mydb->query($sql);
 
 if ($r) {

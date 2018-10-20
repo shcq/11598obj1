@@ -1,8 +1,7 @@
 <?php
     require 'atop.php';
-    require('./common/mysql.php');
     $aid=(int)$_SESSION['aid'];
-    $sql='SELECT * FROM admin WHERE status=1 AND aid='.$aid;
+    $sql='SELECT * FROM admin WHERE status=1';
     $r=$mydb->query($sql);
     $adm=$r->fetch_array(MYSQLI_ASSOC);
     foreach ($adm as $key=>$value){

@@ -1,11 +1,14 @@
 <?php
 require('./common/mysql.php');
-$aid=(int)$_SESSION['aid'];
-$sql='SELECT * FROM admin WHERE status=1 AND aid='.$aid;
-$r=$mydb->query($sql);
-$adm=$r->fetch_array(MYSQLI_ASSOC);
+$sql='SELECT * FROM admin WHERE status=1';
+$r1=$mydb->query($sql);
+$a=$r1->fetch_array(MYSQLI_ASSOC);
 
-foreach ($adm as $key=>$value){
+$uid=(int)$_SESSION['uid'];
+$sql='SELECT * FROM users WHERE status=1 AND uid='.$uid;
+$r=$mydb->query($sql);
+$us=$r->fetch_array(MYSQLI_ASSOC);
+foreach ($us as $key=>$value){
     $$key=$value;
 }
 
@@ -70,13 +73,15 @@ $articles=$r1->fetch_all(MYSQLI_ASSOC);
         <div class="row">
             <div class="col-8">
                 <div class="row">
-                    <a href="admin.php"><img src="images/logo.png" style="width:220px;height: 90px"/></a>
+                    <!--<div class="col-4" style="background: gold">-->
+                    <a href=""><img src="images/logo.png" style="width:220px;height: 90px"/></a>
+                    <!--</div>-->
                 </div>
                 <div class="row text-center nav_h" style="height: 50px;line-height: 50px">
-                    <div class="col-2"><a href="admin.php">首页</a></div>
-                    <div class="col-2"><a href="ahotart.php">热门文章</a></div>
-                    <div class="col-2"><a href="almess.php">留言</a></div>
-                    <div class="col-2"><a href="aabout.php">关于我们</a></div>
+                    <div class="col-2"><a href="./user.php">首页</a></div>
+                    <div class="col-2"><a href="user.php?hotarticle">热门文章</a></div>
+                    <div class="col-2"><a href="./user.php?leavemessage">留言</a></div>
+                    <div class="col-2"><a href="./user.php?aboutus">关于我们</a></div>
                 </div>
             </div>
             <div class="col-4">
@@ -84,8 +89,8 @@ $articles=$r1->fetch_all(MYSQLI_ASSOC);
                     <div class="col-4 text-center header" style="line-height: 60px;margin-top: 10px;">
                         <img src="<?=$head ? $head : 'images/user.png' ?>" height="50" width="50"/>
                         <button type="button" class="btn btn-outline-warning" style="
-                                padding: 0 2px;margin-top: 10px"><span style="font-size: 15px">
-                                        <a href="./updatames.php">个人后台</a></span></button>
+                                padding: 0 2px;"><span style="font-size: 15px">
+                                        <a href="./usercenter.php">个人后台</a></span></button>
                     </div>
                     <div class="col-8">
                         <div class="row">
@@ -95,7 +100,7 @@ $articles=$r1->fetch_all(MYSQLI_ASSOC);
 
                                 <div style="text-align: center;margin-top: 25px">
 
-                                    <span><?= $aname ?></br>欢迎来到悠长博客!</span><br>
+                                    <span><?= $uname ?></br>欢迎来到悠长博客!</span><br>
 <!--                                    <span><a href="">登录</a></span> |-->
                                     <span><a href="./logout.php">退出登录</a></span>
                                 </div>
@@ -114,24 +119,23 @@ $articles=$r1->fetch_all(MYSQLI_ASSOC);
             <div class="col-3"  style="padding-left: 0 ">
                 <!--博主信息简介-->
                 <div style="height: 270px;border: 1px solid #c5b164;padding-top: 20px" class="model_bg">
-                    <div style="text-align: center;" class="header"><img src="<?=$head?>" style="height: 65px;width: 65px"/></div>
-                    <p style="text-align: center;padding-top: 10px"><?=$_SESSION['username']?></p>
+                    <div style="text-align: center;" class="header"><img src="<?=$a['head']?>" style="height: 65px;width: 65px"/></div>
+                    <p style="text-align: center;padding-top: 10px"><?=$a['aname']?></p>
                     <div style="margin-left: 25px">简介:</div>
-                    <div style="width: 200px;height: 70px;margin: 0 auto;border: 1px solid #c5b164"><?=$info?></div>
+                    <div style="width: 200px;height: 70px;margin: 0 auto;border: 1px solid #c5b164"><?=$a['info']?></div>
 <!--                    <button type="button" class="btn btn-primary btn-sm">Small button</button>-->
                 </div>
 
                 <!--搜索栏目-->
                 <div style="height: 43px;border: 1px solid #c5b164;margin-top: 10px">
                     <div class="input-group mb-3">
-                        <form action="./admin.php"  method="get">
-                            <a href="./admin.php?<?=$urlext?>"></a>
-                         
+                        <form action="./user.php"  method="get">
+                            <a href="./user.php?<?=$urlext?>"></a>
                             <input type="text" style="height: 38px;font-family: 新宋体"
                                    name="title" class="layui-input" placeholder="请输入搜索关键字"
                             value="<?= $title ?>">
-   				<button style="background-color: #c2c2c2;width: 40px;height: 40px">
-                                <img src="images/搜索.png" height="30" width="30"/>
+                            <button style="background-color: #c2c2c2;width: 40px;height: 40px">
+                            <img src="images/搜索.png" height="30" width="30"/>
                             </button>
                         </form>
                     </div>

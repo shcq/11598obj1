@@ -1,6 +1,5 @@
 <?php
-	$mydb=new mysqli('localhost','root','root','weblog',3306);
-	$mydb->query('SET NAMES UTF8');
+require('./common/mysql.php');
 	
 	if(isset($_GET['arid'])){
 		$arid=$_GET['arid'];
