@@ -1,4 +1,4 @@
-<?=
+<?php
 require('./common/mysql.php');
 $aid=(int)$_SESSION['aid'];
 $sql='SELECT * FROM admin WHERE status=1 AND aid='.$aid;
