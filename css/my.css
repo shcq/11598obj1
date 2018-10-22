@@ -118,8 +118,11 @@ a:hover{
 	text-indent:25px;
 	
 }
+.warn{
+	color: green;
+}
 .content1::-webkit-scrollbar{
-	/*¹ö¶¯ÌõÕûÌå²¿·Ö£¬ÆäÖĞµÄÊôĞÔÓĞwidth,height,background,borderµÈ£¨¾ÍºÍÒ»¸ö¿é¼¶ÔªËØÒ»Ñù£©£¨Î»ÖÃ1£©*/
+	/*æ»šåŠ¨æ¡æ•´ä½“éƒ¨åˆ†ï¼Œå…¶ä¸­çš„å±æ€§æœ‰width,height,background,borderç­‰ï¼ˆå°±å’Œä¸€ä¸ªå—çº§å…ƒç´ ä¸€æ ·ï¼‰ï¼ˆä½ç½®1ï¼‰*/
 			display: none;
 }
 ul{
@@ -149,4 +152,21 @@ ul{
 }
 ul a{
 	font-size: 15px;
+}
+.offset-3 {
+    margin-left: 30%;
+}
+.btn-primary {
+    color: #fff;
+    background-color: #9d6f0b70;
+    border-color: #9d6f0b70;
+}
+.btn-primary:hover{
+	background-color: #c69e46;
+	border-color: #c69e46;
+}
+.btn-success {
+    color: #fff;
+    background-color: #4db164;
+    border-color: #4db164;
 }

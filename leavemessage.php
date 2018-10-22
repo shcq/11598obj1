@@ -1,12 +1,15 @@
 <?php
-require './top.php'
-?>
+require './common/mysql.php';
+foreach($_POST as $k=>$v){
+	$$k = $v;
+}
 
+$sql = 'INSERT INTO message(content ,addtime ,username) VALUES ("' . $data . '","'.data('Y-m-d H:i:s').'" ,"' . $hidden . '")';
 
-<div class="col-9">
-    <div style="width: 100%;height: 100px;text-align: center;line-height: 100px"><span class="font">留言</span></div>
-    <div style="width: 100%;height: 3px;background: #c5b164"></div>
-</div>
+$r = $mydb->query($sql);
 
-
-<?php require './bottom.php'?>
+if($r) {
+	echo json_encode(['r'=>'ok']);
+} else{
+	echo json_encode(['r'=>'fail']);
+}	
