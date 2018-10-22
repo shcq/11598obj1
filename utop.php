@@ -1,6 +1,13 @@
-
-<?php require './common/mysql.php'?>
-
+<?php
+require './common/mysql.php';
+$uid=(int)$_SESSION['uid'];
+$sql='SELECT * FROM users WHERE status=1 AND uid='.$uid;
+$r=$mydb->query($sql);
+$adm=$r->fetch_array(MYSQLI_ASSOC);
+foreach ($adm as $key=>$value){
+    $$key=$value;
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,19 +16,18 @@
     <title>个人后台</title>
     <link rel="stylesheet" href="./layui/css/layui.css">
     <link rel="icon" href="./images/icon.png">
-    <link rel="stylesheet" href="css/comcss.css">
+    <link rel="stylesheet" href="./css/comcss.css">
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <a href="pcenter.php"><div class="layui-logo">个人后台</div></a>
-        <a href="admin.php"><div class="layui-logo" style="left: 90px">回到首页</div></a>
+        <a href="usercenter.php"><div class="layui-logo">个人后台</div></a>
+        <a href="user.php"><div class="layui-logo" style="left: 90px">回到首页</div></a>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
-                <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                贤心
+                <img src="<?=$head ? $head : './img/罗小黑1.jpg' ?>" class="layui-nav-img">
+                <?=$uname ?>
             </li>
-            <li class="layui-nav-item"><a href="">退出</a></li>
         </ul>
     </div>
 
@@ -32,15 +38,8 @@
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;">个人中心</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="passwd.php">修改密码</a></dd>
-                        <dd><a href="updatames.php">修改个人资料</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item layui-nav-itemed">
-                    <a href="javascript:;">文章管理</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="articlelist.php">文章列表</a></dd>
-                        <dd><a href="relarticle.php">发布文章</a></dd>
+                        <dd><a href="userpw.php">修改密码</a></dd>
+                        <dd><a href="userupdatames.php">修改个人资料</a></dd>
                     </dl>
                 </li>
             </ul>

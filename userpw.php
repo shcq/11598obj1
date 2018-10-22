@@ -1,31 +1,12 @@
-<?php
-require 'atop.php';
-//$mysql = new mysqli('localhost', 'root', 'root', 'weblog', 3306);
-//$mysql->query('SET NAMES UTF8');
-//$sql = 'SELECT aid, aname FROM admin WHERE status = 1';
-//$r = $mysql->query($sql);
-//$weblog = $r->fetch_all(MYSQLI_ASSOC);
-//
-//$aid = (int)$_GET['aid'];
-//$sql = 'SELECT * FROM admin WHERE status = 1 AND aid = ' . $aid;
-//$r = $mysql->query($sql);
-//$atu = $r->fetch_array(MYSQLI_ASSOC);
-//foreach ($atu as $key => $value) {
-//    $$key = $value;
-//}
-?>
-
+<?php require('./utop.php'); ?>
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
             <form class="layui-form" action="">
-
-<!--                <input type="hidden" name="aid" value="--><?//=$aid?><!--">-->
-
                 <div class="layui-form-item">
                     <label class="layui-form-label">用户名</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="username" required lay-verify="required" value="<?=$_SESSION['username']?>" readonly
+                        <input type="text" name="username" required lay-verify="required" value="111" readonly
                                autocomplete="off" class="layui-input">
                     </div>
                     <div class="layui-form-mid layui-word-aux">用户名不可改</div>

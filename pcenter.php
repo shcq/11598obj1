@@ -28,7 +28,12 @@
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;">个人中心</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="passwd.php">修改密码</a></dd>
+                       <dd>
+<!--                           --><?php //echo
+//                               '<a href="./passwd.php?aid=' .$atu['aid'].'">修改密码</a>'
+//                           ?>
+                        <a href="passwd.php">修改密码</a>
+                       </dd>
                         <dd><a href="updatames.php">修改个人资料</a></dd>
                     </dl>
                 </li>

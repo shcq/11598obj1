@@ -31,7 +31,7 @@ window.onload=function(){
                 }
 
                 if(res.r=='ok'){
-                    window.location.href='./list.php';
+                    window.location.href='./admin.php';
                 }
             }
         }

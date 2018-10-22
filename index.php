@@ -1,5 +1,9 @@
 <?php
+<<<<<<< HEAD
 	require('./common/mysql.php');
+=======
+require('./common/mysql.php');
+>>>>>>> 8af0f7b4afd972e300f07f21ed0e8a2ae5ebe9a0
 	
 	if(isset($_GET['arid'])){
 		$arid=$_GET['arid'];
@@ -123,8 +127,13 @@ $articles=$r1->fetch_all(MYSQLI_ASSOC);
             <div class="col-3"  style="padding-left: 0 ">
                 <!--博主信息简介-->
                 <div style="height: 250px;border: 1px solid #c5b164;padding-top: 20px" class="model_bg">
+<<<<<<< HEAD
                     <div style="text-align: center"><img src="<?= $head?>" style="height: 65px;width: 65px;border-radius: 50%;"/></div>
                     <p style="text-align: center;padding-top: 10px"><?= $aname?></p>
+=======
+                    <div style="text-align: center"><img src="images/user.png" style="height: 65px;width: 65px"/></div>
+                    <p style="text-align: center;padding-top: 10px"><?=$_SESSION['username']?></p>
+>>>>>>> 8af0f7b4afd972e300f07f21ed0e8a2ae5ebe9a0
                     <div style="margin-left: 25px">简介:</div>
                     <div style="width: 200px;height: 70px;margin: 0 auto;border: 1px solid #c5b164">fff</div>
                 </div>
