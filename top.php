@@ -5,6 +5,7 @@
     <title>悠长博客</title>
     <link rel="stylesheet" href="./js/bootstrap-4.1.2-dist/css/bootstrap.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="./layui/css/layui.css">
     <link rel="stylesheet" href="css/my.css">
     <link rel="stylesheet" href="./css/animate.css">
     <link rel="icon" href="./images/icon.png">

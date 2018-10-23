@@ -2,6 +2,7 @@ window.onload=function(){
     register();
     uploading();
     updateame();
+    updateume();
 }
 function register() {
     let register1=document.querySelector('.register1');
@@ -112,6 +113,44 @@ function updateame() {
                         btn: [ '回到首页']
                     }, function (index) {
                         window.location.href = './admin.php';
+                    });
+                } else {
+                    alert('失败，请刷新后重新操作');
+                }
+            }
+        }
+    }
+}
+function updateume() {
+    let update1=document.querySelector('.update1');
+    if (!update1) return;
+    update1.onclick=function () {
+
+        let uname=document.querySelector('input[name="uname"]');
+        let regsn=/^[\u4e00-\u9fa5]{2,4}$/;
+        if(!regsn.test(uname.value)){
+            aname.parentNode.nextElementSibling.classList.add('warn');
+            aname.focus();
+            return false;
+        }else {
+            uname.parentNode.nextElementSibling.classList.remove('warn');
+        }
+        let xhr=new XMLHttpRequest();
+        xhr.open('POST','./updatumesto.php');
+        let formdata=new FormData();
+        formdata.append('uname',document.querySelector('input[name="uname"]').value);
+        formdata.append('uid',document.querySelector('input[name="uid"]').value);
+        formdata.append('head',document.querySelector('input[name="head"]').value);
+        console.log(document.querySelector('input[name="head"]').value);
+        xhr.send(formdata);
+        xhr.onreadystatechange=function(){
+            if(xhr.readyState==4 && xhr.status==200){
+                let res=JSON.parse(xhr.responseText);
+                if (res.r == 'ok') {
+                    layer.confirm('修改成功', {
+                        btn: [ '回到首页']
+                    }, function (index) {
+                        window.location.href = './user.php';
                     });
                 } else {
                     alert('失败，请刷新后重新操作');

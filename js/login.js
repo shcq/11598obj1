@@ -1,5 +1,7 @@
 window.onload=function(){
         let login=document.querySelector('.login');
+        let  unm=document.querySelector('input[name="username"]');
+        let  upsd=document.querySelector('input[name="passwd"]');
         if (!login) return;
         let register=document.querySelector('.register');
         if (!register) return;
@@ -28,16 +30,22 @@ window.onload=function(){
                 if(res.r=='uname not exist'){
                     document.querySelector('.utip').innerHTML='账号不存在';
                     document.querySelector('.utip').classList.add('warn');
+                    unm.focus();
                     return;
+                }else {
+                unm.parentNode.nextElementSibling.classList.remove('warn');
                 }
                 if(res.r=='psd error'){
                     document.querySelector('.ptip').innerHTML='密码错误';
                     document.querySelector('.ptip').classList.add('warn');
+                    upsd.focus();
                     return;
+                }else {
+                    upsd.parentNode.nextElementSibling.classList.remove('warn');
                 }
 
                 if(res.r=='ok'){
-                    window.location.href='./index.php';
+                    window.location.href='./user.php';
                 }
             }
         }

@@ -1,5 +1,7 @@
 window.onload=function(){
     let adminlog=document.querySelector('.adminlog');
+    let  anm=document.querySelector('input[name="username"]');
+    let  apsd=document.querySelector('input[name="passwd"]');
     if (!adminlog) return;
     let returns=document.querySelector('.returns');
     if (!returns) return;
@@ -22,12 +24,18 @@ window.onload=function(){
                 if(res.r=='uname not exist'){
                     document.querySelector('.utip').innerHTML='账号不存在';
                     document.querySelector('.utip').classList.add('warn');
+                    anm.focus();
                     return;
+                }else {
+                    anm.parentNode.nextElementSibling.classList.remove('warn');
                 }
                 if(res.r=='psd error'){
                     document.querySelector('.ptip').innerHTML='密码错误';
                     document.querySelector('.ptip').classList.add('warn');
+                    apsd.focus();
                     return;
+                }else {
+                    apsd.parentNode.nextElementSibling.classList.remove('warn');
                 }
 
                 if(res.r=='ok'){

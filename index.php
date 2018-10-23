@@ -1,65 +1,98 @@
 <?php
-<<<<<<< HEAD
-	require('./common/mysql.php');
-=======
 require('./common/mysql.php');
->>>>>>> 8af0f7b4afd972e300f07f21ed0e8a2ae5ebe9a0
-	
-	if(isset($_GET['arid'])){
-		$arid=$_GET['arid'];
-		$sql='SELECT arid ,title ,  content FROM arlist WHERE status = 1 AND arid=' .$arid;
-		
-		$r=$mydb->query($sql);
-		$list=$r->fetch_all(MYSQLI_ASSOC);
-	}
-	//留言
-	if(isset($_GET['leavemessage'])){
-		
-		$sql='SELECT content ,addtime ,  username FROM message WHERE 1';
-		
-		$r=$mydb->query($sql);
-		$message=$r->fetch_all(MYSQLI_ASSOC);
-	}
-	
-	else{
-		$sql='SELECT arid ,title ,  content FROM arlist WHERE status = 1 LIMIT 5';
-		$r=$mydb->query($sql);
-		$list=$r->fetch_all(MYSQLI_ASSOC);
-	}
-	
-	
-	
-	//查询热门文章
-	$sql='SELECT arid, arnums,title ,content FROM arlist WHERE status = 1  order by arnums desc LIMIT 5';
-	$x=$mydb->query($sql);
-	$hot=$x->fetch_all(MYSQLI_ASSOC);
+$aid=(int)$_SESSION['aid'];
+$sql='SELECT * FROM admin WHERE status=1 AND aid='.$aid;
+$r=$mydb->query($sql);
+$adm=$r->fetch_array(MYSQLI_ASSOC);
+
+foreach ($adm as $key=>$value){
+    $$key=$value;
+}
+
 	
 	//查询最近访问用户
-	$sql='SELECT cuid,cuname,cunums FROM currentuser WHERE 1 order by time desc LIMIT 5';
+	$sql='SELECT uid,uname,lasttimes FROM users WHERE 1 order by lasttimes desc LIMIT 5';
 	$y=$mydb->query($sql);
 	$currentuser=$y->fetch_all(MYSQLI_ASSOC);
-	
-	//查询博主信息
-	$sql='SELECT aid,aname,head FROM admin WHERE 1';
-	$m=$mydb->query($sql);
-	$admin=$m->fetch_array(MYSQLI_ASSOC);
-	foreach ($admin as $k=>$v){
-		$$k=$v;
-	}
+
+
 
 	//搜索文章
+
 	$where=' WHERE status=1';
 	$urlext='';
-$title='';
+    $title='';
 if(isset($_GET['title'])&&trim($_GET['title'])){
     $title=trim($_GET['title']);
     $where.=' AND title LIKE "%'.$title.'%"';
     $urlext.='&title='.urlencode($title);
 }
 
-$sql='SELECT * FROM arlist'.$where;
+//分页
+$pagenum = 2;
+//计算总页数 $totalpage = ($totalnums / $pagenum)
+$sql = 'SELECT COUNT(arid) AS totalnums FROM arlist' . $where;
+
+$r = $mydb->query($sql);
+$row = $r->fetch_array(MYSQLI_ASSOC);
+//var_dump($row);
+//var_dump($pagenum);
+$totalpage = ceil($row['totalnums'] / $pagenum);
+
+//当前是第几页
+$page = (isset($_GET['page']) && (int)$_GET['page'] > 0 && (int)$_GET['page'] <= $totalpage) ? $_GET['page'] : 1;
+
+$sql = 'SELECT * FROM arlist' . $where . ' LIMIT ' . ($page - 1) * $pagenum . ', ' . $pagenum;
 $r1=$mydb->query($sql);
 $articles=$r1->fetch_all(MYSQLI_ASSOC);
+require('./page.php');
+$ext = '';
+if(isset($_GET['arid'])){
+    $arid=$_GET['arid'];
+
+    $sql='SELECT arid ,title ,  content FROM arlist WHERE status = 1 AND arid=' .$arid;
+
+    $sql1 ='UPDATE arlist SET arnums = arnums+1 WHERE status = 1 AND arid=' .$arid;
+    $mydb->query($sql1);
+    $r=$mydb->query($sql);
+    $list=$r->fetch_all(MYSQLI_ASSOC);
+
+}
+//留言
+else if(isset($_GET['leavemessage'])) {
+    $ext = 'leavemessage=1&';
+    $sql1 = 'SELECT COUNT(mid) AS totalnums FROM message';
+//    var_dump($sql1);
+    $r1 = $mydb->query($sql1);
+    $row1 = $r1->fetch_array(MYSQLI_ASSOC);
+    $totalpage = ceil($row1['totalnums'] / $pagenum);
+    $page = (isset($_GET['page']) && (int)$_GET['page'] > 0 && (int)$_GET['page'] <= $totalpage) ? $_GET['page'] : 1;
+    $sql = 'SELECT content ,addtime ,  username FROM message LIMIT ' . ($page - 1) * $pagenum . ', ' . $pagenum;
+    var_dump($sql);
+    $r = $mydb->query($sql);
+    $message = $r->fetch_all(MYSQLI_ASSOC);
+    require('./page.php');
+}else if(isset($_GET['hotarticle'])) {
+    $ext = 'hotarticle=1&';
+    $sql1 = 'SELECT COUNT(arid) AS totalnums FROM arlist';
+//    var_dump($sql1);
+    $r1 = $mydb->query($sql1);
+    $row1 = $r1->fetch_array(MYSQLI_ASSOC);
+    $totalpage = ceil($row1['totalnums'] / $pagenum);
+    $page = (isset($_GET['page']) && (int)$_GET['page'] > 0 && (int)$_GET['page'] <= $totalpage) ? $_GET['page'] : 1;
+    //查询热门文章
+    $sql='SELECT arid, arnums,title ,content FROM arlist WHERE status = 1  order by arnums desc 
+          LIMIT '.($page - 1) * $pagenum . ', ' . $pagenum;
+    $x=$mydb->query($sql);
+    $hot=$x->fetch_all(MYSQLI_ASSOC);
+    require('./page.php');
+}
+else{
+    $sql='SELECT arid ,title ,  content FROM arlist WHERE status = 1 LIMIT '.($page-1)*$pagenum.',' . $pagenum;
+    echo $sql;
+    $r=$mydb->query($sql);
+    $list=$r->fetch_all(MYSQLI_ASSOC);
+}
 ?>
 
 
@@ -70,6 +103,10 @@ $articles=$r1->fetch_all(MYSQLI_ASSOC);
     <title>悠长博客</title>
     <link rel="stylesheet" href="./js/bootstrap-4.1.2-dist/css/bootstrap.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="./js/jquery-3.3.1.js"></script>
+    <script src="./js/bootstrap-4.1.2-dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="js/bootstrap-4.1.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/comcss.css">
     <link rel="stylesheet" href="css/my.css">
     <link rel="icon" href="./images/icon.png">
 </head>
@@ -88,13 +125,11 @@ $articles=$r1->fetch_all(MYSQLI_ASSOC);
         <div class="row">
             <div class="col-8">
                 <div class="row">
-                    <!--<div class="col-4" style="background: gold">-->
-                    <a href=""><img src="images/logo.png" style="width:220px;height: 90px"/></a>
-                    <!--</div>-->
+                    <a href="index.php"><img src="images/logo.png" style="width:220px;height: 90px"/></a>
                 </div>
                 <div class="row text-center nav_h" style="height: 50px;line-height: 50px">
                     <div class="col-2"><a href="./index.php">首页</a></div>
-                    <div class="col-2"><a href="index.php?hotarticle=hotarticle">热门文章</a></div>
+                    <div class="col-2"><a href="index.php?hotarticle">热门文章</a></div>
                     <div class="col-2"><a href="./index.php?leavemessage">留言</a></div>
                     <div class="col-2"><a href="./index.php?aboutus">关于我们</a></div>
                 </div>
@@ -126,23 +161,19 @@ $articles=$r1->fetch_all(MYSQLI_ASSOC);
             <!--左侧各个功能框-->
             <div class="col-3"  style="padding-left: 0 ">
                 <!--博主信息简介-->
-                <div style="height: 250px;border: 1px solid #c5b164;padding-top: 20px" class="model_bg">
-<<<<<<< HEAD
-                    <div style="text-align: center"><img src="<?= $head?>" style="height: 65px;width: 65px;border-radius: 50%;"/></div>
-                    <p style="text-align: center;padding-top: 10px"><?= $aname?></p>
-=======
-                    <div style="text-align: center"><img src="images/user.png" style="height: 65px;width: 65px"/></div>
+                <div style="height: 270px;border: 1px solid #c5b164;padding-top: 20px" class="model_bg">
+                    <div style="text-align: center;" class="header"><img src="<?=$head?>" style="height: 65px;width: 65px"/></div>
                     <p style="text-align: center;padding-top: 10px"><?=$_SESSION['username']?></p>
->>>>>>> 8af0f7b4afd972e300f07f21ed0e8a2ae5ebe9a0
                     <div style="margin-left: 25px">简介:</div>
-                    <div style="width: 200px;height: 70px;margin: 0 auto;border: 1px solid #c5b164">fff</div>
+                    <div style="width: 200px;height: 70px;margin: 0 auto;border: 1px solid #c5b164"><?=$info?></div>
+<!--                    <button type="button" class="btn btn-primary btn-sm">Small button</button>-->
                 </div>
 
                 <!--搜索栏目-->
                 <div style="height: 43px;border: 1px solid #c5b164;margin-top: 10px">
                     <div class="input-group mb-3">
                         <form action="./index.php"  method="get">
-                            <a href="./index.php?<?=$urlext?>"></a>
+                            <a href="./index.php?page=<?=$p.$urlext?>"></a>
                             <button type="button" class="btn btn-success">搜索</button>
                             <input type="text" style="height: 40px;width:160px;font-family: 新宋体"
                                    name="title" class="layui-input" placeholder="请输入搜索关键字"
@@ -152,22 +183,23 @@ $articles=$r1->fetch_all(MYSQLI_ASSOC);
                             </button>
                         </form>
                     </div>
-                    
+
                 </div>
 
                 <!--最近访问用户-->
                 <div class="model_bg">
                     <div style="width: 100%;height:50px;text-align: center;line-height: 50px">最近访问的用户</div>
                     <div style="width: 200px;height:250px;margin:5px  auto;border: 1px solid #c5b164">
-                    	<ul class="user">
-							<?php
-							foreach($currentuser as $k=>$v){
+                        <ul class="user">
+                            <?php
+                            foreach($currentuser as $k=>$v){
 //						var_dump($v);
 //						exit;
-						echo '<li>'.$v['cuname'].' <span>第'.$v['cunums'].'次访问</span></li>';
-							}
-						?>
-						</ul>	
+                                echo '<li>'.$v['uname'].' </br> <span>'.$v['lasttimes'].'访问</span></li>';
+
+                            }
+                            ?>
+                        </ul>
                     </div>
                 </div>
 
@@ -176,17 +208,21 @@ $articles=$r1->fetch_all(MYSQLI_ASSOC);
                     <div style="width: 100%;height:50px;text-align: center;line-height: 50px">热门文章</div>
                     <div style="width: 200px;height:250px;margin:5px  auto;border: 1px solid #c5b164">
                         <ul class="hot">
-                    		<?php
-                    		foreach($hot as $k=>$v){
-                    	//	var_dump($v);
-                    	//	exit;
-                    		echo '<li>
+                        <?php
+                        $sql='SELECT arid, arnums,title ,content FROM arlist WHERE status = 1  
+                        order by arnums desc LIMIT 5';
+                        $x1=$mydb->query($sql);
+                        $hot1=$x1->fetch_all(MYSQLI_ASSOC);
+                        foreach($hot1 as $k=>$v){
+                            //	var_dump($v);
+                            //	exit;
+                            echo '<li>
                     				<a href="index.php?arid='.$v['arid'].'">
                     				 '.$v['title'].' </a><span> '.$v['arnums'].'次浏览</span>
                     			  </li>';
-                    			}
-                    		?>
-                    	</ul>
+                        }
+                        ?>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -245,10 +281,10 @@ $articles=$r1->fetch_all(MYSQLI_ASSOC);
                 <div style="width: 100%;height: 3px;background: #c5b164"></div>
                 <div class="articlebox" style=" overflow: hidden;">
                 	<div class="form-group">
-    <textarea class="form-control" rows="8" placeholder="对本博客有什么批评或者建议的请留言给我们，我们会努力做的更好的，谢谢！"></textarea>
-    <input type="hidden" name="hidden" value="<?= $_SESSION["uname"]?>
+    <textarea class="form-control" rows="6" placeholder="对本博客有什么批评或者建议的请留言给我们，我们会努力做的更好的，谢谢！"></textarea>
+    <input type="hidden" name="hidden" value="'.$_SESSION['uname'].'">
     </br>
-    			<button type="button" id="message" class="btn btn-primary btn-lg btn-block">提交留言</button></br></br><hr>
+    			<button type="button" id="message" class="btn btn-primary btn-lg btn-block">提交留言</button></br><hr>
   					</div>
                 	
                 	';
@@ -256,10 +292,10 @@ $articles=$r1->fetch_all(MYSQLI_ASSOC);
                     foreach ($message as $k=>$v)
                     {
                         echo '
-                        	留言：
                         	<div class="message">
+                        	<div style="text-align: left ;margin-bottom: 10px;color: #9c7c40;font-family: 宋体"> ----- 留言：---</div>
                                <div class="mcontent">'.$v['content'].'</div>
-                               <span>'.$v['username'].' 发表于 '.$v['addtime'].'</span>
+                               <div style=" text-align: right;padding: 10px">'.$v['username'].' 发表于 '.$v['addtime'].'</div>
                             </div>
                             ';
                     }
@@ -323,6 +359,25 @@ $articles=$r1->fetch_all(MYSQLI_ASSOC);
                 		
                 		}
                 	?>
+            <ul class="pagination">
+                <li>
+                    <a href="./index.php?<?=$ext?>page=<?= $prev .$urlext?>">上一页</a>
+                </li>
+                <?php
+                for ($p = $start; $p <= $end; $p++)
+                {
+
+
+                    echo '<li>
+                        <a href="./index.php?'.$ext.'page='  . $p . $urlext. '">' . $p . '</a></li>';
+                }
+                ?>
+                <li>
+                    <a href="./index.php?<?=$ext?>page=<?= $next . $urlext ?>" >下一页</a>
+                </li>
+
+
+            </ul>
                 </div>
             </div>
         </div>
