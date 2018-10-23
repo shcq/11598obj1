@@ -1,7 +1,5 @@
 <?php
 require 'atop.php';
-$mydb = new mysqli('localhost', 'root', 'root', 'weblog', 3306);
-$mydb->query('SET NAMES UTF8');
 $sql = 'SELECT aid,passwd ,aname FROM admin WHERE status = 1';
 $r = $mydb->query($sql);
 $admin = $r->fetch_array(MYSQLI_ASSOC);

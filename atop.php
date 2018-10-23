@@ -1,5 +1,13 @@
 
-<?php require './common/admin.php'?>
+<?php
+require './common/admin.php';
+$sql='SELECT * FROM admin WHERE status=1';
+$r=$mydb->query($sql);
+$adm=$r->fetch_array(MYSQLI_ASSOC);
+foreach ($adm as $key=>$value){
+    $$key=$value;
+}
+?>
 
 <!DOCTYPE html>
 <html>
@@ -19,8 +27,8 @@
         <a href="admin.php"><div class="layui-logo" style="left: 90px">回到首页</div></a>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
-                <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                <?= $_SESSION['aname']?>
+                <img src="<?=$head ? $head : './img/罗小黑1.jpg' ?>" class="layui-nav-img">
+                <?= $aname?>
             </li>
             <li class="layui-nav-item"><a href="./logout.php">退出</a></li>
         </ul>

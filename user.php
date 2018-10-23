@@ -1,9 +1,5 @@
 <?php
 require('./common/admin.php');
-if(!$_SESSION['uid']){
-    header('Location:./login.html');
-    exit;
-}
 
 $sql='SELECT * FROM admin WHERE status=1';
 $r1=$mydb->query($sql);

@@ -1,6 +1,5 @@
 <?php
     require 'atop.php';
-    require('./common/mysql.php');
     $aid=(int)$_SESSION['aid'];
     $sql='SELECT * FROM admin WHERE status=1 AND aid='.$aid;
     $r=$mydb->query($sql);
@@ -28,7 +27,7 @@
                 <label class="layui-form-label">头像</label>
                 <div class="layui-input-inline">
                     <label class="header" for="header">
-                        <img src="<?=$_SESSION['head'] ? $head : './img/罗小黑1.jpg' ?>" alt="">
+                        <img src="<?=$head ? $head : './img/罗小黑1.jpg' ?>" alt="">
                     </label>
                     <input type="file" name="header" id="header" class="preheader">
                     <input type="hidden" name="head" value="<?=$head?>">

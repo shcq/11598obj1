@@ -42,6 +42,5 @@ require 'atop.php';
 <!--<script src="http://unpkg.com/wangeditor/release/wangEditor.min.js"></script>-->
 
 
-<script src="./js/admin.js"></script>
 
 <?php require 'abottom.php'?>

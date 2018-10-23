@@ -12,7 +12,7 @@ if($passwdA != $passwdB){
 
 
 $sql = 'update admin set passwd = "'.md5($passwdB).'" where aid ='.(int)$_SESSION['aid'].' LIMIT 1';
-echo $sql;
+//echo $sql;
 $r = $mydb->query($sql);
 if ($r) {
     echo json_encode(['r'=>'ok', 'id'=>100]);
