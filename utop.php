@@ -1,5 +1,5 @@
 <?php
-require './common/mysql.php';
+require './common/admin.php';
 $uid=(int)$_SESSION['uid'];
 $sql='SELECT * FROM users WHERE status=1 AND uid='.$uid;
 $r=$mydb->query($sql);

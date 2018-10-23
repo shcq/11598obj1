@@ -1,6 +1,9 @@
 <?php
-require('./common/mysql.php');
-
+require('./common/admin.php');
+if(!$_SESSION['uid']){
+    header('Location:./login.html');
+    exit;
+}
 
 $sql='SELECT * FROM admin WHERE status=1';
 $r1=$mydb->query($sql);
@@ -67,6 +70,7 @@ if(isset($_GET['arid'])){
 }
 //留言
 else if(isset($_GET['leavemessage'])) {
+    $pagenum = 3;
     $ext = 'leavemessage=1&';
     $sql1 = 'SELECT COUNT(mid) AS totalnums FROM message';
 //    var_dump($sql1);
@@ -97,7 +101,7 @@ else if(isset($_GET['leavemessage'])) {
 
 else{
     $sql='SELECT arid ,title ,  content FROM arlist WHERE status = 1 LIMIT '.($page-1)*$pagenum.',' . $pagenum;
-    echo $sql;
+//    echo $sql;
     $r=$mydb->query($sql);
     $list=$r->fetch_all(MYSQLI_ASSOC);
 }
@@ -149,7 +153,7 @@ else{
                         <img src="<?=$us['head'] ? $us['head']  : 'images/user.png' ?>" height="50" width="50"/>
                         <button type="button" class="btn btn-outline-warning" style="
                                 padding: 0 2px;"><span style="font-size: 15px">
-                                        <a href="./usercenter.php">个人后台</a></span></button>
+                                        <a href="./usercenter.php">个人中心</a></span></button>
                     </div>
                     <div class="col-8">
                         <div class="row">
@@ -181,7 +185,7 @@ else{
                     <div style="text-align: center"><img src="<?= $head?>" style="height: 65px;width: 65px;border-radius: 50%;"/></div>
                     <p style="text-align: center;padding-top: 10px"><?= $aname?></p>
                     <div style="margin-left: 25px">简介:</div>
-                    <div style="width: 200px;height: 70px;margin: 0 auto;border: 1px solid #c5b164"><?=$a['info']?></div>
+                    <div class="info" style="width: 200px;height: 70px;margin: 0 auto;border: 1px solid #c5b164"><?=$a['info']?></div>
 <!--                    <button type="button" class="btn btn-primary btn-sm">Small button</button>-->
                 </div>
 
@@ -234,7 +238,7 @@ else{
                             //	var_dump($v);
                             //	exit;
                             echo '<li>
-                    				<a href="user.php?arid='.$v['arid'].'">
+                    				<a class="title1" title="'.$v['title'].'" href="user.php?arid='.$v['arid'].'">
                     				 '.$v['title'].' </a><span> '.$v['arnums'].'次浏览</span>
                     			  </li>';
                         }
@@ -259,7 +263,7 @@ else{
                         //			exit;
                         echo '
                 				<div class="article">
-                				<div style="magin-top:20px;"><h3> '.$v['title'].'</h3></div>
+                				<div class="title" title="'.$v['title'].'" style="magin-top:20px;"><h3> '.$v['title'].'</h3></div>
                 				<hr>
                 				<div class="content1"> '.$v['content'].' </div>
                 				</div>
@@ -281,7 +285,7 @@ else{
                         echo '
                         	<div class="article">
                         	<div>
-                               <h4><a href="user.php?arid='.$v['arid'].'">'.str_replace($title,'<span class="warn">'.$title.'</span>',$v['title']).'</a></h4>
+                               <h4><a class="title" title="'.$v['title'].'" href="user.php?arid='.$v['arid'].'">'.str_replace($title,'<span class="warn">'.$title.'</span>',$v['title']).'</a></h4>
                                <hr>
                                <div class="content">'.$v['content'].'</div>
                             </div>
@@ -334,7 +338,7 @@ else{
                 	//			exit;
                 			echo '
                 				<div class="article">
-                				<h4><a href="user.php?arid='.$v['arid'].'"> '.$v['title'].' </a><div  style="text-align:right;padding-right:180px;font-size:13px"> <b>'.$v['arnums'].'</b>次浏览</div></h4>
+                				<h4><a class="title" title="'.$v['title'].'" href="user.php?arid='.$v['arid'].'"> '.$v['title'].' </a><div  style="text-align:right;padding-right:180px;font-size:13px"> <b>'.$v['arnums'].'</b>次浏览</div></h4>
                 				<hr>
                 				<div class="content"> '.$v['content'].' </div>
                 				</div>
@@ -375,10 +379,12 @@ else{
                 				</div>
                 				';
                 		}
-                		
+
                 		}
+
                 	?>
-            <ul class="pagination">
+            <?php if(!isset($_GET['arid']) && !isset($_GET['aboutus'])){?>
+               <ul class="pagination">
                 <li>
                     <a href="./user.php?<?=$ext?>page=<?= $prev .$urlext?>">上一页</a>
                 </li>
@@ -386,17 +392,28 @@ else{
                 for ($p = $start; $p <= $end; $p++)
                 {
 
+                    if ($p == $page) {
+                        echo '<li class="active"><a href="#">' . $page . ' <span class="sr-only">(current)</span></a></li>';
 
-                    echo '<li>
-                        <a href="./user.php?'.$ext.'page='  . $p . $urlext. '">' . $p . '</a></li>';
+                    }
+                    else{
+                        echo '<li>
+                        <a href="./user.php?'.$ext.'page='  . $p . $urlext. '">' . $p . '</a></li>';}
                 }
+
+
+
                 ?>
-                <li>
-                    <a href="./user.php?<?=$ext?>page=<?= $next . $urlext ?>" >下一页</a>
-                </li>
+            <li>
+                <a href="./user.php?<?=$ext?>page=<?= $next . $urlext ?>" >下一页</a>
+            </li>
 
 
             </ul>
+            <?php
+           }
+
+            ?>
                 </div>
             </div>
         </div>

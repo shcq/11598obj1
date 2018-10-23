@@ -4,7 +4,7 @@ foreach ($_POST as $key => $value) {
     $$key = $value;
 }
 
-$sql = 'UPDATE admin SET aname = "' . $aname . '", head = "' . $head . '",info = "' . addslashes($info) . '" WHERE status=1';
+$sql = 'UPDATE admin SET aname = "' . $aname . '", head = "' . $head . '",  updatetimes="'.date('Y-m-d H:i:s').'", info = "' . addslashes($info) . '" WHERE aid = ' . (int)$aid;
 // echo $sql;
 // exit;
 $r = $mydb->query($sql);

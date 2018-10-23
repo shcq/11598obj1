@@ -1,7 +1,7 @@
 <?php
 require('./common/mysql.php');
-$aid=(int)$_SESSION['aid'];
-$sql='SELECT * FROM admin WHERE status=1 AND aid='.$aid;
+
+$sql='SELECT * FROM admin WHERE status=1 ';
 $r=$mydb->query($sql);
 $adm=$r->fetch_array(MYSQLI_ASSOC);
 
@@ -60,6 +60,7 @@ if(isset($_GET['arid'])){
 }
 //留言
 else if(isset($_GET['leavemessage'])) {
+    $pagenum = 3;
     $ext = 'leavemessage=1&';
     $sql1 = 'SELECT COUNT(mid) AS totalnums FROM message';
 //    var_dump($sql1);
@@ -68,7 +69,7 @@ else if(isset($_GET['leavemessage'])) {
     $totalpage = ceil($row1['totalnums'] / $pagenum);
     $page = (isset($_GET['page']) && (int)$_GET['page'] > 0 && (int)$_GET['page'] <= $totalpage) ? $_GET['page'] : 1;
     $sql = 'SELECT content ,addtime ,  username FROM message LIMIT ' . ($page - 1) * $pagenum . ', ' . $pagenum;
-    var_dump($sql);
+//    var_dump($sql);
     $r = $mydb->query($sql);
     $message = $r->fetch_all(MYSQLI_ASSOC);
     require('./page.php');
@@ -89,7 +90,7 @@ else if(isset($_GET['leavemessage'])) {
 }
 else{
     $sql='SELECT arid ,title ,  content FROM arlist WHERE status = 1 LIMIT '.($page-1)*$pagenum.',' . $pagenum;
-    echo $sql;
+//    echo $sql;
     $r=$mydb->query($sql);
     $list=$r->fetch_all(MYSQLI_ASSOC);
 }
@@ -163,9 +164,9 @@ else{
                 <!--博主信息简介-->
                 <div style="height: 270px;border: 1px solid #c5b164;padding-top: 20px" class="model_bg">
                     <div style="text-align: center;" class="header"><img src="<?=$head?>" style="height: 65px;width: 65px"/></div>
-                    <p style="text-align: center;padding-top: 10px"><?=$_SESSION['username']?></p>
+                    <p style="text-align: center;padding-top: 10px"><?=$aname?></p>
                     <div style="margin-left: 25px">简介:</div>
-                    <div style="width: 200px;height: 70px;margin: 0 auto;border: 1px solid #c5b164"><?=$info?></div>
+                    <div class="info" style="width: 200px;height: 70px;margin: 0 auto;border: 1px solid #c5b164"><?=$info?></div>
 <!--                    <button type="button" class="btn btn-primary btn-sm">Small button</button>-->
                 </div>
 
@@ -217,7 +218,7 @@ else{
                             //	var_dump($v);
                             //	exit;
                             echo '<li>
-                    				<a href="index.php?arid='.$v['arid'].'">
+                    				<a class="title1" title="'.$v['title'].'" href="index.php?arid='.$v['arid'].'">
                     				 '.$v['title'].' </a><span> '.$v['arnums'].'次浏览</span>
                     			  </li>';
                         }
@@ -243,7 +244,7 @@ else{
                 	//			exit;
                 			echo '
                 				<div class="article">
-                				<div style="magin-top:20px;"><h3> '.$v['title'].'</h3></div>
+                				<div class="title" title="'.$v['title'].'" style="magin-top:20px;"><h3> '.$v['title'].'</h3></div>
                 				<hr>
                 				<div class="content1"> '.$v['content'].' </div>
                 				</div>
@@ -265,7 +266,7 @@ else{
                         echo '
                         	<div class="article">
                         	<div>
-                               <h4><a href="index.php?arid='.$v['arid'].'">'.str_replace($title,'<span class="warn">'.$title.'</span>',$v['title']).'</a></h4>
+                               <h4><a class="title" title="'.$v['title'].'" href="index.php?arid='.$v['arid'].'">'.str_replace($title,'<span class="warn">'.$title.'</span>',$v['title']).'</a></h4>
                                <div class="content">'.$v['content'].'</div>
                             </div>
                             </div>
@@ -314,7 +315,7 @@ else{
                 	//			exit;
                 			echo '
                 				<div class="article">
-                				<h4><a href="index.php?arid='.$v['arid'].'"> '.$v['title'].' </a><div  style="text-align:right;padding-right:180px;font-size:13px"> <b>'.$v['arnums'].'</b>次浏览</div></h4>
+                				<h4><a class="title" title="'.$v['title'].'" href="index.php?arid='.$v['arid'].'"> '.$v['title'].' </a><div  style="text-align:right;padding-right:180px;font-size:13px"> <b>'.$v['arnums'].'</b>次浏览</div></h4>
                 				<hr>
                 				<div class="content"> '.$v['content'].' </div>
                 				</div>
@@ -359,25 +360,37 @@ else{
                 		
                 		}
                 	?>
-            <ul class="pagination">
-                <li>
-                    <a href="./index.php?<?=$ext?>page=<?= $prev .$urlext?>">上一页</a>
-                </li>
+            <?php if(!isset($_GET['arid']) && !isset($_GET['aboutus'])){?>
+                <ul class="pagination">
+                    <li>
+                        <a href="./index.php?<?=$ext?>page=<?= $prev .$urlext?>">上一页</a>
+                    </li>
+                    <?php
+                    for ($p = $start; $p <= $end; $p++)
+                    {
+
+
+                        if ($p == $page) {
+                            echo '<li class="active"><a href="#">' . $page . ' <span class="sr-only">(current)</span></a></li>';
+
+                        }
+                        else{
+                            echo '<li>
+                        <a href="./index.php?'.$ext.'page='  . $p . $urlext. '">' . $p . '</a></li>';}
+                    }
+
+
+                    ?>
+                    <li>
+                        <a href="./index.php?<?=$ext?>page=<?= $next . $urlext ?>" >下一页</a>
+                    </li>
+
+
+                </ul>
                 <?php
-                for ($p = $start; $p <= $end; $p++)
-                {
+            }
 
-
-                    echo '<li>
-                        <a href="./index.php?'.$ext.'page='  . $p . $urlext. '">' . $p . '</a></li>';
-                }
-                ?>
-                <li>
-                    <a href="./index.php?<?=$ext?>page=<?= $next . $urlext ?>" >下一页</a>
-                </li>
-
-
-            </ul>
+            ?>
                 </div>
             </div>
         </div>

@@ -2,13 +2,13 @@
 require 'atop.php';
 
 $sql = 'SELECT arid, title ,content FROM arlist WHERE status = 1';
-$r = $mysql->query($sql);
+$r = $mydb->query($sql);
 $classlist = $r->fetch_all(MYSQLI_ASSOC);
 
 //获取原始信息
 $arid = (int)$_GET['arid'];
 $sql = 'SELECT * FROM arlist WHERE status = 1 AND arid = ' . $arid;
-$r = $mysql->query($sql);
+$r = $mydb->query($sql);
 $atu = $r->fetch_array(MYSQLI_ASSOC);
 foreach ($atu as $key => $value) {
     $$key = $value;
@@ -38,13 +38,13 @@ foreach ($atu as $key => $value) {
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">修改内容</label>
             <div class="layui-input-block">
-                <textarea name="desc" placeholder="请输入内容"  class="layui-textarea" style="width: 60%"></textarea>
+                <textarea name="content" placeholder="请输入内容" class="layui-textarea" style="width: 60%"><?=$content?></textarea>
             </div>
         </div>
 
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn addart" type="button">修改</button>
+                <button class="layui-btn updateart" type="button">修改</button>
             </div>
         </div>
     </form>

@@ -1,5 +1,8 @@
 <?php
-require 'atop.php'
+require './common/mysql.php';
+require 'atop.php';
+
+
 ?>
 
 
@@ -22,7 +25,7 @@ require 'atop.php'
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">文章内容</label>
             <div class="layui-input-block">
-                <textarea name="desc" placeholder="请输入内容" class="layui-textarea" style="width: 60%"></textarea>
+                <textarea name="content" placeholder="请输入内容" class="layui-textarea" style="width: 60%"></textarea>
             </div>
         </div>
 
@@ -39,5 +42,6 @@ require 'atop.php'
 <!--<script src="http://unpkg.com/wangeditor/release/wangEditor.min.js"></script>-->
 
 
+<script src="./js/admin.js"></script>
 
 <?php require 'abottom.php'?>

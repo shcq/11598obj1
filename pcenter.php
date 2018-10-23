@@ -1,3 +1,6 @@
+<?php
+require './common/admin.php';
+?>
 <!DOCTYPE html>
 <html>
 <head>

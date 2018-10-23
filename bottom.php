@@ -20,7 +20,8 @@
 <div style="height: 50px"></div>
 
 </div>
-
+<script src="./js/jquery-3.3.1.js"></script>
+<script src="./js/bootstrap-4.1.2-dist/js/bootstrap.js"></script>
 <script src="./js/wow.min.js"></script>
 <script src="layui/layui.all.js"></script>
 <script>

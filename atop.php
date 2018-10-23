@@ -1,5 +1,5 @@
 
-<?php require './common/mysql.php'?>
+<?php require './common/admin.php'?>
 
 <!DOCTYPE html>
 <html>
@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="./layui/css/layui.css">
     <link rel="icon" href="./images/icon.png">
     <link rel="stylesheet" href="css/comcss.css">
+    <link rel="stylesheet" href="css/my.css">
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -19,9 +20,9 @@
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                贤心
+                <?= $_SESSION['aname']?>
             </li>
-            <li class="layui-nav-item"><a href="">退出</a></li>
+            <li class="layui-nav-item"><a href="./logout.php">退出</a></li>
         </ul>
     </div>
 
